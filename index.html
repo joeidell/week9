@@ -1,0 +1,131 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Data-driven continuous size | Sample | ArcGIS Maps SDK for JavaScript 4.28</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/dark/main.css" />
+    <script src="https://js.arcgis.com/4.28/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <script>
+      require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/widgets/Legend"], (
+        Map,
+        MapView,
+        FeatureLayer,
+        Legend
+      ) => {
+        const defaultSym = {
+          type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+          color: [0, 0, 0, 0],
+          outline: {
+            // autocasts as new SimpleLineSymbol()
+            color: "#03b1fc",
+            width: 1
+          }
+        };
+
+        /*****************************************************************
+         * Set a size visual variable on the renderer. Size visual variables
+         * create continuous ramps that map low data values to small icons
+         * and high data values to large icons. Features
+         * with data values in between the min and max data values are assigned
+         * a size proportionally between the min and max sizes specified in
+         * `minSize` and `maxSize` or `stops`.
+         *****************************************************************/
+
+        const renderer = {
+          type: "simple", // autocasts as new SimpleRenderer()
+          symbol: defaultSym,
+          visualVariables: [
+            {
+              type: "size",
+              field: "F2018",
+    
+              legendOptions: {
+                title: ""
+              },
+              stops: [
+                {
+                  value: 4,
+                  size: 4,
+                  label: "4 Liters"
+                },
+                {
+                  value: 11,
+                  size: 12,
+                  label: "11 Liters"
+                },
+                {
+                  value: 21,
+                  size: 20,
+                  label: "21 Liters"
+                }
+              ]
+            }
+          ]
+        };
+          /////Alcohol_consumption_by_countries
+        const povLayer = new FeatureLayer({
+          url:
+            "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Alcohol_consumption_by_countries/FeatureServer/0",
+          renderer: renderer,
+          title: "Alcohol consumption by countries",
+          popupTemplate: {
+            // autocasts as new PopupTemplate()
+            title: "{Country_Name}",
+            content: "{Country_Name} consumed {F2018} liters of Alcohol per capita in 2018. ",
+            fieldInfos: [
+              {
+                fieldName: "Happiness_score",
+                format: {
+                  digitSeparator: true,
+                  places: 0
+                }
+              },
+            ]
+          }
+        });
+
+        const map = new Map({
+          basemap: "dark-gray-vector",
+          layers: [povLayer]
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: [0, 0],
+          zoom: 1
+        });
+
+        /******************************************************************
+         *
+         * Add layers to layerInfos on the legend
+         *
+         ******************************************************************/
+
+        view.ui.add(
+          new Legend({
+            view: view
+          }),
+          "top-right"
+        );
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
