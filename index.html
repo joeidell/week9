@@ -30,7 +30,7 @@
           color: [0, 0, 0, 0],
           outline: {
             // autocasts as new SimpleLineSymbol()
-            color: "#03b1fc",
+            color: "#f59b42",
             width: 1
           }
         };
@@ -58,17 +58,17 @@
               stops: [
                 {
                   value: 1,
-                  size: 1,
+                  size: 10,
                   label: "1 Liters"
                 },
                 {
                   value: 11,
-                  size: 12,
+                  size: 20,
                   label: "11 Liters"
                 },
                 {
                   value: 21,
-                  size: 20,
+                  size: 30,
                   label: "21 Liters"
                 }
               ]
@@ -87,7 +87,7 @@
             content: "{Country_Name} consumed {F2018} liters of alcohol per capita in 2018. ",
             fieldInfos: [
               {
-                fieldName: "Happiness_score",
+                fieldName: "F2018",
                 format: {
                   digitSeparator: true,
                   places: 0
@@ -98,7 +98,7 @@
         });
 
         const map = new Map({
-          basemap: "streets",
+          basemap: "gray",
           layers: [povLayer]
         });
 
@@ -106,7 +106,7 @@
           container: "viewDiv",
           map: map,
           center: [0, 0],
-          zoom: 1
+          zoom: 2
         });
 
         /******************************************************************
