@@ -57,9 +57,9 @@
               },
               stops: [
                 {
-                  value: 4,
-                  size: 4,
-                  label: "4 Liters"
+                  value: 1,
+                  size: 1,
+                  label: "1 Liters"
                 },
                 {
                   value: 11,
@@ -84,7 +84,7 @@
           popupTemplate: {
             // autocasts as new PopupTemplate()
             title: "{Country_Name}",
-            content: "{Country_Name} consumed {F2018} liters of Alcohol per capita in 2018. ",
+            content: "{Country_Name} consumed {F2018} liters of alcohol per capita in 2018. ",
             fieldInfos: [
               {
                 fieldName: "Happiness_score",
@@ -98,7 +98,7 @@
         });
 
         const map = new Map({
-          basemap: "dark-gray-vector",
+          basemap: "World_Basemap_v2",
           layers: [povLayer]
         });
 
